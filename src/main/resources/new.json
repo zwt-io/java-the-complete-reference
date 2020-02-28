@@ -1,0 +1,26 @@
+{
+    "base": "USD",
+    "date": "2020-02-05",
+    "rates": [
+        {
+            "code": "EUR",
+            "rate": 0.88857
+        },
+        {
+            "code": "JPY",
+            "rate": 102.17
+        },
+        {
+            "code": "MXN",
+            "rate": 19.232
+        },
+        {
+            "code": "GBP",
+            "rate": 0.75705
+        },
+        {
+            "code": "CNY",
+            "rate": 6.97982
+        }
+    ]
+}
