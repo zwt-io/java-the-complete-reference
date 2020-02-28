@@ -12,12 +12,16 @@ import java.io.IOException;
  * use the following command line.
  * <p>
  * java ShowFile latest.json
+ * <p>
+ * This variation wraps the code that opens and
+ * accesses the file within a single try block.
+ * The file is closed by the finally block.
  */
 
 public class ShowFile {
     public static void main(String[] args) {
         int i;
-        FileInputStream fin;
+        FileInputStream fin = null;
 
         // First, confirm that a filename has been specified.
         if (args.length != 1) {
@@ -25,30 +29,28 @@ public class ShowFile {
             return;
         }
 
-        // Attempt to open the file.
+        // The following code opens a file, reads characters until EOF
+        // is encountered, and then closes the file via a finally block.
         try {
             fin = new FileInputStream(args[0]);
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot Open File");
-            return;
-        }
-
-        // At this point, the file is open and can be read.
-        // The following reads characters until EOF is encountered.
-        try {
             do {
                 i = fin.read();
                 if (i != -1) System.out.print((char) i);
             } while (i != -1);
-        } catch (IOException e) {
-            System.out.println("Error Reading File");
-        }
 
-        // Close the file.
-        try {
-            fin.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found.");
         } catch (IOException e) {
-            System.out.println("Error Closing File");
+            System.out.println("An I/O Error Occurred");
+        } finally {
+            // Close file in all cases.
+            try {
+                if (fin != null) {
+                    fin.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Error Closing File");
+            }
         }
     }
 }
